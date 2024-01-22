@@ -1,0 +1,363 @@
+:root{
+    --backgroundbase:#121212;
+    --txt:20px;
+    --backelevatedbase:#242424;
+    --txtcol:white;
+    --fnt:Helvetica Neue,helvetica,arial,Hiragino Kaku Gothic ProN,Meiryo,MS Gothic;
+    --mrgintxt:20px;
+    --cardcolor:#181818;
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: var(--fnt);
+}
+body{
+    background-color: black;
+}
+
+.left{
+    width: 25vw;
+    height: 100vh;
+
+}
+.right{
+    width: 75vw;
+
+    height: 100vh;
+}
+.logo{
+
+    max-width: 100px;
+    max-height: 30px;
+    margin: 10px 10px;
+    filter: invert(1);
+
+}
+img{
+    filter: invert(0.5);/
+}
+.home ul li{
+    list-style-type: none;
+    /* width: 15px; */
+    display: flex;
+    gap: 10px;
+    margin: 20px 20px;
+    font-size: var(--txt)
+
+}
+.home ul li img{
+    /* margin: 4px 10px; */
+    width: var(--txt);
+}
+
+.home{
+    position: relative;
+    z-index: 1;
+    background-color:var(--backgroundbase);
+    color: gray;
+    height: fit-content;
+    min-width: fit-content;
+
+}
+.home ul :first-child:hover{
+    color: white;
+}
+.home ul :nth-child(2):hover{
+    color: white;
+}
+.library{
+    height: 77%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.lib{
+    /* border: 2px solid black; */
+    background-color: var(--backgroundbase);
+    height: 77vh;
+
+}
+.libgrid{
+    background-color: var(--backgroundbase);
+    display: grid;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+
+    grid-template-columns: 0.7fr 3.3fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: ar1 ar2 ar3;
+}
+.b1{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    grid-column: 1/2;
+    /* background-color: violet; */
+    justify-content: center;
+    align-items: center;
+}
+.b1 img{
+    max-width:var(--txt) ;
+
+    grid-column: 1/2;
+    /* background-color: violet; */
+}
+
+.libgrid p{
+    grid-column: 2/3;
+
+
+    font-size: var(--txt);
+    color: gray;
+    
+
+}
+.libgrid button{
+    grid-column: 3/4;
+ 
+    border: 0px;
+    height: 100%;
+    width: 100%;
+}
+.i2{
+    grid-column: 3/4;
+    /* background-color: antiquewhite; */
+    border: 0px;
+    height: var(--txt);
+
+}
+button{
+    background: transparent;
+}
+.plypdc{
+    height: fit-content;
+    /* width: 9vm    ; */
+    margin: 10px;
+}
+.playlist,.podcast{
+    background-color:var(--backelevatedbase);
+    height: fit-content;
+
+    width: 100%;
+    padding: 1px 0PX;
+    border-radius: 10px;
+    margin: 10px 0px;
+}
+
+.playlist p:nth-child(1),.podcast p:nth-child(1){
+    color: var(--txtcol);
+    font-weight: 700;
+    font-family: var(--fnt);
+    margin: var(--mrgintxt);
+
+}
+.playlist p:nth-child(2),.podcast p:nth-child(2){
+    color: var(--txtcol);
+    font-family: var(--fnt);
+    margin:var(--mrgintxt);
+
+}
+.createply,.createpod{
+    background-color: white;
+    border: 0px;
+    border:2px solid gray;
+    padding: 10px;
+    border-radius: 19px;
+    color: black;
+    font-weight: 800;
+    margin: 4px 19px;
+    margin-bottom: 10px;
+}
+.cookin{
+    position: relative;
+
+    background-color: black;
+    height: 100px;
+    width: 100%;
+    z-index: 2;
+}
+.cookin p{
+    color: var(--txtcol);
+    margin: 15px 15px;
+    font-size: small;
+    color: gray;
+}
+.cookin p:hover{
+    text-decoration: underline;
+}
+.langbtn img{
+    filter: invert(1);
+    width: var(--txt);
+}
+.langbtn{
+    margin: 20px 15px;
+    border: 2px solid white;
+    /* font-size: var(--txt); */
+    font-weight: 600;
+    color: var(--txtcol);
+    gap: 2px;
+    padding: 6px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navbar{
+    height: 70px;
+    margin: 3px;
+    display: grid;
+    grid-template-columns: 1fr 8fr 4fr;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--backgroundbase);
+
+}
+@media only screen and (max-width:1400px){
+    .navbar{
+       grid-template-columns:1fr 2fr;
+    }
+    .cred{
+        grid-column: 2/3;
+
+    }
+}
+.arr{
+    grid-column: 1/2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.arr img{
+    width: 15px;
+    margin: 0px 10px;
+}
+.cred{
+    grid-column: 3/4;
+    justify-self: end;
+}
+.cred button{
+    margin: 10px 20px;
+    font-weight: 700;
+    width: 90px;
+    color: var(--txtcol);
+    border:0px;
+    padding: 10px;
+    border-radius: 20px;
+}
+.cred button:nth-child(2){
+    background-color: white;
+    color: black;
+}
+.playlistbox{
+    /* border: 2px solid blue; */
+    height: 88.7vh;
+}
+.playlistbox span{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--backelevatedbase);
+    color: var(--txtcol);
+
+}
+.playlistbox span h2{
+padding:10px;
+margin: 5px 10px;
+grid-column: 1/2;
+}
+.playlistbox span p{
+    
+    margin: 5px 10px;
+    grid-column: 2/3;
+    justify-self: end;
+    padding:10px;
+    color: gray;
+}
+.playlistbox span>h2:hover{
+    text-decoration: underline;
+}
+.playlistbox span>p:hover{
+    text-decoration: underline;
+}
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    border-radius: 10px;
+    margin: 20px;
+    width: 200px;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--cardcolor);
+
+}
+.card *{
+    margin-top: 4px;
+
+}
+.cardDetails{
+    /* border: 2px solid red; */
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cardDetails h3{
+    color: white;
+}
+.cardDetails>p{
+color: gray;
+    overflow: hidden;
+padding: 4px;
+    font-size: small;
+    margin: 10px;
+    /* border: 2px solid black; */
+    height: 30px;
+    width: 95%;
+}
+.card img{
+    border: 1px solid gray;
+    border-radius: 8px;
+    margin: 10px 10px;
+    margin-bottom: 0px;
+    width: 90%;
+    filter: invert(0);
+    /* box-shadow: 0px 0px 20px black ; */
+}
+.play button{
+border: 0px;
+    background: transparent;
+
+}
+.play button svg{
+padding: 10px;
+fill: black;
+background-color: #1ed760;
+clip-path: circle(77%);
+border-radius: 50%;
+}
+.imgbox{
+    position: relative;
+}
+.play{position: absolute;
+    bottom:-40px;
+    right: 13px;
+    opacity: 0;
+    transition: all 0.5s linear;
+}
+.card:hover{
+    .play{
+        opacity: 1;
+        bottom: 10px;
+    }
+}
