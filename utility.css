@@ -16,3 +16,38 @@
 .width100{
     width: 100em;
 }
+/* Add this to your main stylesheet */
+
+/* Width and Color of the scrollbar track */
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #121212; /* Dark background color */
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background-color: #333; /* Dark grey color for the handle */
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Slightly lighter grey on hover */
+  }
+  
+  /* Button on the scrollbar (arrows at the top and bottom) */
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  /* Width and Color of the scrollbar track */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: #181818 #121212;
+  }
+  
+  /* Handle on hover */
+  body:hover {
+    scrollbar-color: #2d2d2d #333;
+  }
+  

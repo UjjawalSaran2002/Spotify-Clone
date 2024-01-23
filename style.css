@@ -23,8 +23,8 @@ body{
 }
 .right{
     width: 75vw;
-
     height: 100vh;
+    position: relative;;
 }
 .logo{
 
@@ -137,7 +137,7 @@ button{
     /* width: 9vm    ; */
     margin: 10px;
 }
-.playlist,.podcast{
+.playlist,.podcast,.songlist{
     background-color:var(--backelevatedbase);
     height: fit-content;
 
@@ -214,6 +214,7 @@ button{
     align-items: center;
     background-color: var(--backgroundbase);
 
+
 }
 @media only screen and (max-width:1400px){
     .navbar{
@@ -237,20 +238,40 @@ button{
 }
 .cred{
     grid-column: 3/4;
-    justify-self: end;
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+
 }
 .cred button{
-    margin: 10px 20px;
+    /* margin: 10px 20px; */
+    
     font-weight: 700;
-    width: 90px;
+    width: 80px;
     color: var(--txtcol);
     border:0px;
     padding: 10px;
     border-radius: 20px;
 }
+.cred button:nth-child(1){
+    grid-column: 2/3;
+}
 .cred button:nth-child(2){
     background-color: white;
     color: black;
+    grid-column: 3/4 ;
+}
+.cred button:nth-child(2):hover{
+    padding: 13px ;
+    width: 85px;
+    cursor: pointer;
+}
+.cred button:nth-child(1):hover{
+    padding: 13px ;
+    width: 85px;
+    background-color: #282828;
+    cursor: pointer;
 }
 .playlistbox{
     /* border: 2px solid blue; */
@@ -287,6 +308,8 @@ grid-column: 1/2;
 .cardContainer{
     display: flex;
     flex-wrap: wrap;
+    max-height: 75vh;
+    overflow-y: scroll;
 }
 .card{
     border-radius: 10px;
@@ -360,4 +383,24 @@ border-radius: 50%;
         opacity: 1;
         bottom: 10px;
     }
+    background-color: #282828;
+}
+.playbar{
+    background-color: green;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.playbar *{
+    margin: 3px 5px;
+    filter: invert(0);
+}
+.songlist{
+    color: white;
+
 }
