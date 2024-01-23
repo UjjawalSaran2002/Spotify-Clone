@@ -34,10 +34,19 @@ async function main(){
     let a=await getSongs();  
     let songNames= await getSongName();
     console.log(a); 
-    var currentsong= new Audio(a[1]);
+    let i=0;
+    var currentsong= new Audio(a[i]);
     let playpause=document.getElementsByClassName("playpause")[0]
     let pp=document.getElementsByClassName("playpause")[0].children[0]
-   
+    let prevsong=document.querySelector(".prevsong").children[0]
+    prevsong.addEventListener("click",()=>{
+        i=(Math.abs(i-1))%((a.length)+1);
+        currentsong.pause()
+        currentsong=new Audio(a[i])
+        currentsong.play();
+        console.log("clicked prev song")
+    })
+
     playpause.addEventListener("click",()=>{
         if(currentsong.paused){
             currentsong.play();
@@ -56,8 +65,10 @@ async function main(){
     let snglst= document.querySelector(".songlist").children[0];
 
     for (const name of songNames) {
+        let nameart=name.split("artist-")
+        nameart[1]=nameart[1].replace(".mp3","")
         snglst.innerHTML=snglst.innerHTML+`<li>${name}</li>`
-        
+        console.log(nameart)
     }
     
 }
