@@ -1,4 +1,4 @@
-let currentsong=new Audio();
+var currentsong;
 let songlist;
 let i=0;
 // let a= getSongs();  
@@ -28,10 +28,7 @@ async function playSong(songname){
     c=c.replaceAll(" ","")
     songname=songname.replaceAll(" ","")
        if(songname==c){
-        currentsong.pause();
-        currentSong=Audio(a[key])
-        currentSong.play();
-        playtheme();
+        playThisSong(a[key])
        }
     }
 }
@@ -51,6 +48,12 @@ async function getSongName(){
    }
    return songs 
 }
+async function playThisSong(x){
+    currentsong.pause()
+    currentsong=new Audio(x)
+    currentsong.play();
+    playtheme();
+}
 async function playtheme(){
     let pp=document.getElementsByClassName("playpause")[0].children[0];
     pp.src="/svgs/pause.svg";
@@ -63,9 +66,9 @@ async function pausedtheme(){
 }
 async function nSong(){
     i=(Math.abs(i+1))%((a.length));
-    currentsong.pause()
-    currentsong=new Audio(a[i])
-    currentsong.play();
+   
+    playThisSong(a[i]);
+   
     console.log("playing next song")
     playtheme();
     
@@ -77,9 +80,8 @@ async function pSong(){
 
         i=(i-1);
     }
-    currentsong.pause()
-    currentsong=new Audio(a[i])
-    currentsong.play();
+
+    playThisSong(a[i]);
     console.log("playing previous song")
     playtheme();
 
@@ -157,7 +159,7 @@ async function main(){
         <p >${nameart[0]}</p>
         <p>${nameart[1]}</p>
         </div>
-        <div class="playnow">playnow <img src="/svgs/playbtn.svg" alt="playbtn">
+        <div class="playnow">Play Now <img src="/svgs/playbtn.svg" alt="playbtn">
         </div>
         
         </li>`
@@ -173,6 +175,34 @@ async function main(){
 
     
     })
+
+    let container=document.querySelector(".cardContainer")
+    console.log(container)
+    songlist.forEach(element => {
+        let newcard= `<div class="card">
+        <div class="imgbox">
+    
+            <img src="/images/ab67706f000000026e515187c071e45918e9f0de.jpeg" alt="ss">
+            <div class="play">
+                  <button>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="/icons/play-stroke-sharp.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#000000">
+                          <path d="M5 20V4L19 12L5 20Z" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"></path>
+                          </svg>
+                  </button>
+            </div>
+        </div>
+        <div class="cardDetails">
+    
+            <h3>${element}</h3>
+            <p>
+                The perfect soundtrack to those long nights over dinner
+            </p>
+        </div>
+    </div>`
+        container.innerHTML=container.innerHTML+newcard
+        
+        
+    });
 
     }
     
