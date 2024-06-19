@@ -1,6 +1,7 @@
 var currentsong;
 let songlist;
 let i = 0;
+let songDuration = 0;
 // let a= getSongs();  
 async function getSongs() {
     let a = await fetch("http://127.0.0.1:3000/songs/");
@@ -19,13 +20,10 @@ async function getSongs() {
     return songs
 }
 async function playSong(songname) {
-    // let a=await getSongs();  
-    // let songlist=await getSongName()
-    // console.log(songlist)
-    songname=songname.split("artist")
-    songname=songname[0]
+    songname = songname.split("artist")
+    songname = songname[0]
     songname = songname.replaceAll(".mp3", "")
-    let PrevSongName=document.getElementsByClassName("sDetails")[0].children[0].innerText=songname
+    let PrevSongName = document.getElementsByClassName("sDetails")[0].children[0].innerText = songname
     console.log(PrevSongName)
     songname = songname.replaceAll(" ", "")
     songname = songname.replaceAll("-", "")
@@ -35,14 +33,14 @@ async function playSong(songname) {
         var b = songlist[key].split("artist")
         let c = b[0].replace(".mp3", "")
         c = c.replaceAll(" ", "")
-       
+
 
         if (songname == c) {
             playThisSong(a[key])
             console.log(`playing ${a[key]}`)
         }
     }
-   
+
 }
 async function getSongName() {
     let a = await fetch("http://127.0.0.1:3000/songs/");
@@ -76,11 +74,22 @@ async function pausedtheme() {
     pp.src = "/svgs/playbtn.svg"
 
 }
+function playPauseFunc(event) {
+    if (event.type === "click" || (event.type === "keypress" && (event.keyCode === 32 || event.key === " "))) {
+        console.log("Spacebar pressed or element clicked");
+        if (currentsong.paused) {
+            currentsong.pause()
+            currentsong.play();
+            playtheme()
+        } else {
+            currentsong.pause();
+            pausedtheme();
+        }
+    }
+}
 async function nSong() {
     i = (Math.abs(i + 1)) % ((a.length));
-
     playThisSong(a[i]);
-
     console.log("playing next song")
     playtheme();
 
@@ -103,7 +112,6 @@ async function main() {
     songlist = await getSongName();
     a = await getSongs();
     let songNames = songlist;
-    // console.log(a); 
     i = 0;
     currentsong = new Audio(a[i]);
     let playpause = document.getElementsByClassName("playpause")[0]
@@ -111,45 +119,15 @@ async function main() {
     let prevsong = document.querySelector(".prevsong").children[0]
     let nextsong = document.querySelector(".nextsong").children[0]
     prevsong.addEventListener("click", () => {
-        // if(i==0){
-        //     i=a.length-1;
-        // }else{
-
-        //     i=(i-1);
-        // }
-        // currentsong.pause()
-        // currentsong=new Audio(a[i])
-        // currentsong.play();
-        // console.log("playing previous song")
-
         pSong();
-
     })
     nextsong.addEventListener("click", () => {
-        // i=(Math.abs(i+1))%((a.length));
-        // currentsong.pause()
-        // currentsong=new Audio(a[i])
-        // currentsong.play();
-        // console.log("clicked next song")
-        // playtheme();
-
         nSong();
     })
 
-    playpause.addEventListener("click", () => {
-
-        if (currentsong.paused) {
-            currentsong.pause()
-            currentsong.play();
-
-            // pp.src="/svgs/pause.svg"
-            playtheme()
-        } else {
-            currentsong.pause();
-            // pp.src="/svgs/playbtn.svg"
-            pausedtheme();
-        }
-    });
+    playpause.addEventListener("click", playPauseFunc);
+    // playpause.addEventListener("keypress", playPauseFunc); This is for spacebar 
+    // playpause.setAttribute("tabindex", "0");
     currentsong.addEventListener("ontimeupdate", () => {
         let dur = currentsong.duration;
         console.log("duration is", dur)
@@ -188,6 +166,8 @@ async function main() {
             // console.log(e.children[1].children[0])
             let songname = (e.children[1].children[0].innerText)
             playSong(songname)
+
+            
         })
 
 
@@ -223,14 +203,38 @@ async function main() {
 
     });
     var allCards = Array.from(document.getElementsByClassName("card"))
-        allCards.forEach(element => {
-            element.addEventListener("click",()=>{
-                // console.log(element.children[1].children[0])
-                playSong(element.children[1].children[0].textContent)
-           
-            })
-        });
-}
+    allCards.forEach(element => {
+        element.addEventListener("click", () => {
+            // console.log(element.children[1].children[0])
+            playSong(element.children[1].children[0].textContent)
 
+        })
+    });
+            
+
+            // Once the metadata is loaded, get the duration of the song
+            currentsong.addEventListener('loadedmetadata', function () {
+                songDuration = currentsong.duration;
+                updateProgressBar(); // Call updateProgressBar initially to set the progress bar
+            });
+            currentsong.addEventListener('timeupdate', updateProgressBar);
+
+            // Stop updating progress bar when the song ends
+            currentsong.addEventListener('ended', function() {
+              clearInterval(progressInterval);
+            });
+}
+function updateProgressBar() {
+    const currentTime = currentsong.currentTime;
+    const progress = (currentTime / songDuration) * 100;
+    document.querySelector(".progress-bar").style.width=`${progress} %`;
+    currentsong.addEventListener('timeupdate', ()=>{
+        const pixels=800*progress;
+        // document.querySelector(".end-circle").style.right=`${pixels} px`
+
+
+        // console.log(progress)
+    });
+}
 
 main()   
