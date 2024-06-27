@@ -4,9 +4,8 @@ let i = 0;
 let songDuration = 0;
 // let a= getSongs();  
 async function getSongs() {
-    let a = await fetch("http://127.0.0.1:3000/songs/");
+    let a = await fetch("http://127.0.0.1:5500/songs/");
     let response = await a.text();
-    // console.log(response)
     let div = document.createElement("div");
     div.innerHTML = response;
     let as = div.getElementsByTagName("a")
@@ -28,7 +27,9 @@ async function playSong(songname) {
     songname = songname.replaceAll(" ", "")
     songname = songname.replaceAll("-", "")
     songname = songname.replaceAll(",", "")
+
     console.log(songname)
+    // console.log(songlist)
     for (const key in songlist) {
         var b = songlist[key].split("artist")
         let c = b[0].replace(".mp3", "")
@@ -43,7 +44,7 @@ async function playSong(songname) {
 
 }
 async function getSongName() {
-    let a = await fetch("http://127.0.0.1:3000/songs/");
+    let a = await fetch("http://127.0.0.1:5500/songs/");
     let response = await a.text();
     // console.log(response)
     let div = document.createElement("div");
@@ -66,12 +67,12 @@ async function playThisSong(x) {
 }
 async function playtheme() {
     let pp = document.getElementsByClassName("playpause")[0].children[0];
-    pp.src = "/svgs/pause.svg";
+    pp.src = "./svgs/pause.svg";
 
 }
 async function pausedtheme() {
     let pp = document.getElementsByClassName("playpause")[0].children[0];
-    pp.src = "/svgs/playbtn.svg"
+    pp.src = "./svgs/playbtn.svg"
 
 }
 function playPauseFunc(event) {
@@ -107,6 +108,19 @@ async function pSong() {
     playtheme();
 
 }
+function updateProgressBar() {
+    var progressed=document.getElementById("progress-bar")
+    var dur_bar=document.getElementById("duration-bar")
+    currentsong.ontimeupdate=function(e){
+        
+        progressed.style.width=Math.floor(100*currentsong.currentTime/currentsong.duration)+"%"
+    }
+    dur_bar.onclick=function(e){
+        currentsong.currentTime=((e.offsetX/dur_bar.offsetWidth)*currentsong.duration)
+    }
+    
+}
+
 async function main() {
     document.title = "Spotify-Clone"
     songlist = await getSongName();
@@ -120,9 +134,11 @@ async function main() {
     let nextsong = document.querySelector(".nextsong").children[0]
     prevsong.addEventListener("click", () => {
         pSong();
+        updateProgressBar()
     })
     nextsong.addEventListener("click", () => {
         nSong();
+        updateProgressBar()
     })
 
     playpause.addEventListener("click", playPauseFunc);
@@ -131,6 +147,7 @@ async function main() {
     currentsong.addEventListener("ontimeupdate", () => {
         let dur = currentsong.duration;
         console.log("duration is", dur)
+        updateProgressBar()
 
     })
     // let playpause=document.getElementsByClassName("playpause")[0]
@@ -149,12 +166,12 @@ async function main() {
         }
         snglst.innerHTML = snglst.innerHTML + ` <li class="songListCardli">
         
-        <img src="/svgs/music.svg" alt="music.svg">
+        <img src="./svgs/music.svg" alt="music.svg">
         <div class="nameartist">
         <p >${nameart[0]}</p>
         <p>${nameart[1]}</p>
         </div>
-        <div class="playnow">Play Now <img src="/svgs/playbtn.svg" alt="playbtn">
+        <div class="playnow">Play Now <img src="./svgs/playbtn.svg" alt="playbtn">
         </div>
         
         </li>`
@@ -166,6 +183,7 @@ async function main() {
             // console.log(e.children[1].children[0])
             let songname = (e.children[1].children[0].innerText)
             playSong(songname)
+
 
             
         })
@@ -181,10 +199,10 @@ async function main() {
         let newcard = `<div class="card">
         <div class="imgbox">
     
-            <img src="/images/ab67706f000000026e515187c071e45918e9f0de.jpeg" alt="ss">
+            <img src="./images/ab67706f000000026e515187c071e45918e9f0de.jpeg" alt="ss">
             <div class="play">
                   <button>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="/icons/play-stroke-sharp.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#000000">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="./icons/play-stroke-sharp.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#000000">
                           <path d="M5 20V4L19 12L5 20Z" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"></path>
                           </svg>
                   </button>
@@ -207,34 +225,21 @@ async function main() {
         element.addEventListener("click", () => {
             // console.log(element.children[1].children[0])
             playSong(element.children[1].children[0].textContent)
+            updateProgressBar()
 
         })
     });
             
-
-            // Once the metadata is loaded, get the duration of the song
-            currentsong.addEventListener('loadedmetadata', function () {
-                songDuration = currentsong.duration;
-                updateProgressBar(); // Call updateProgressBar initially to set the progress bar
-            });
-            currentsong.addEventListener('timeupdate', updateProgressBar);
-
-            // Stop updating progress bar when the song ends
-            currentsong.addEventListener('ended', function() {
-              clearInterval(progressInterval);
-            });
-}
-function updateProgressBar() {
-    const currentTime = currentsong.currentTime;
-    const progress = (currentTime / songDuration) * 100;
-    document.querySelector(".progress-bar").style.width=`${progress} %`;
-    currentsong.addEventListener('timeupdate', ()=>{
-        const pixels=800*progress;
-        // document.querySelector(".end-circle").style.right=`${pixels} px`
-
-
-        // console.log(progress)
+    // var progressed= document.getElementById("progress-bar");
+    // progressed.addEventListener("")
+    var dur_bar = document.getElementById("duration-bar");
+    dur_bar.addEventListener("click", function(e) {
+        var offsetX = e.offsetX;
+        var newTime = (offsetX / dur_bar.offsetWidth) * currentsong.duration;
+        currentsong.currentTime = newTime;
     });
+
 }
+
 
 main()   

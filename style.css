@@ -430,8 +430,13 @@ border-radius: 50%;
 }
 .playbar{
     margin: 30px 0px;
-background-color: black;
-height: 85px;
+    background-color: black;
+    height: 85px;
+    width: 100%;
+    /* position: fixed;
+    display :flex;
+    justify-content:space-between ;
+    align-items:center ; */
 }
 .songlist{
     color: white;
@@ -487,15 +492,34 @@ height: 85px;
     margin: 20px auto;
     position: relative;
     bottom: -63px;
+    flex-grow: 1;
+    overflow: hidden;
+    cursor: pointer;
   }
 .progress-bar {
 height: 100%;
-width:40%;
+width:5px;
 background-color: #1db954;
 border-radius: 5px;
 position: relative;
 top: 0;
 left: 0;
+transition: all 5s;
+
+}
+.progress-bar:after{
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #0fdd54;
+    border-radius: 50%;
+    border-color: #121212;
+    border-style: solid;
+    right:-8px;
+
+     
+
 }
 .end-circle {
     width: 15px;
@@ -506,3 +530,4 @@ left: 0;
     top: -3px;
     right: -7.5px; /* Half of the circle's width to center it */
   }
+   
